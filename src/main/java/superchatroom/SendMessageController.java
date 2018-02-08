@@ -25,7 +25,7 @@ public class SendMessageController {
 
     @RequestMapping(value="/send", method = RequestMethod.POST)
     public void sendMessage(@RequestBody Message message) throws MqttException {
-        String receivedMessage = message.getMessage();
+        String receivedMessage = message.getUsername() + ":" + message.getMessage();
         if (receivedMessage != null && !receivedMessage.isEmpty()) {
             MqttMessage mqttMessage = new MqttMessage();
             mqttMessage.setPayload(receivedMessage.getBytes());
