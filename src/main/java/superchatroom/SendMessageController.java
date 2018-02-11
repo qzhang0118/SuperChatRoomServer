@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Sends message to Mqtt client.
  */
@@ -31,5 +35,15 @@ public class SendMessageController {
             mqttMessage.setPayload(receivedMessage.getBytes());
             client.publish(message.getTopic(), mqttMessage);
         }
+    }
+
+    @RequestMapping(value="/topics", method = RequestMethod.GET)
+    public List<Topic> getTopics() {
+        List<Topic> topicList = new ArrayList<>();
+        Topic weatherTopic = new Topic("Weather", "天气");
+        Topic technologyTopic = new Topic("Technology", "Technology");
+        topicList.add(weatherTopic);
+        topicList.add(technologyTopic);
+        return topicList;
     }
 }
